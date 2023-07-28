@@ -25,19 +25,27 @@
     </header>
     <div class="lists-container">
         <ul id="active-list">
-            <span id="list-title">Active</span><br>
-            <input type="text" id="active-input" placeholder="Write your to-do">
-            <span class="material-symbols-outlined add-icon" onclick="addTask(null, activeTasks, active)">add</span>
+            <span id="active-list-title">Active</span><br>
+            <div id="active-input-add">
+                <input type="text" id="active-input" placeholder="Write your to-do">
+                <span class="material-symbols-outlined add-icon" onclick="addTask(null, activeTasks, active)">add</span>
+            </div>
         </ul>
         <ul id="completed-list">
-            <span id="list-title">Completed</span><br>
-            <input type="text" id="completed-input" placeholder="Write your to-do">
-            <span class="material-symbols-outlined add-icon" onclick="addTask(null, completedTasks, completed)">add</span>
+            <span id="completed-list-title">Completed</span><br>
+            <div id="completed-input-add">
+                <input type="text" id="completed-input" placeholder="Write your to-do">
+                <span class="material-symbols-outlined add-icon"
+                    onclick="addTask(null, completedTasks, completed)">add</span>
+            </div>
         </ul>
-        <ul id="archieved-list">
-            <span id="list-title">Archived</span><br>
-            <input type="text" id="archived-input" placeholder="Write your to-do">
-            <span class="material-symbols-outlined add-icon" onclick="addTask(null, archivedTasks, archived)">add</span>
+        <ul id="archived-list">
+            <span id="archived-list-title">Archived</span><br>
+            <div id="archived-input-add">
+                <input type="text" id="archived-input" placeholder="Write your to-do">
+                <span class="material-symbols-outlined add-icon"
+                    onclick="addTask(null, archivedTasks, archived)">add</span>
+            </div>
         </ul>
     </div>
 </body>

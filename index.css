@@ -1,0 +1,219 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #313131;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    text-align: center;
+    position: relative;
+    width: 75%;
+    color: white;
+    padding: 10px 0;
+    margin: 0.5% auto;
+    border-radius: 20px;
+    background-color: rgb(31, 31, 31);
+}
+
+.lists-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 75%;
+    margin: 5px auto;
+}
+
+ul li {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    margin: 10px 0;
+    color: white;
+}
+
+ul input[type="text"] {
+    padding: 5px;
+    font-size: 16px;
+    position: relative;
+    background-color: transparent;
+    border: transparent;
+    color: white;
+    outline: none;
+    width: 100%;
+}
+
+.add-icon,
+.archive-icon,
+.delete-icon,
+.done-icon,
+.unarchive-icon {
+    cursor: pointer;
+    color: white;
+    vertical-align: middle;
+}
+
+#active-list-title {
+    background: linear-gradient(135deg, #00BFB2, #3568b4);
+}
+
+#completed-list-title {
+    background: linear-gradient(135deg, #01cf1d, #249c20);
+}
+
+#archived-list-title {
+    background: linear-gradient(135deg, #bf0000, #831d1d);
+}
+
+.title {
+    background: linear-gradient(135deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+}
+
+#active-list-title,
+#completed-list-title,
+#archived-list-title,
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    flex: 1;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    --angle: 0deg;
+    animation: animatedgradient 5s linear infinite;
+}
+
+.title {
+    margin: 0;
+    font-size: 36px;
+}
+
+#active-input-add,
+#completed-input-add,
+#archived-input-add {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px;
+}
+
+.item {
+    align-items: center;
+    padding: 2.5%;
+}
+
+#active-list,
+#completed-list,
+#archived-list {
+    position: relative;
+    border-radius: 20px;
+    padding: 10px;
+    width: 55%;
+    align-self: flex-start;
+    background-color: rgb(31, 31, 31);
+    margin: 10px;
+}
+
+#active-list::after,
+#completed-list::after,
+#archived-list::after,
+header::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    pointer-events: none;
+    background: inherit;
+    filter: blur(10px);
+    opacity: 0.5;
+    z-index: -1;
+    --angle: 0deg;
+    background: linear-gradient(var(--angle), #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+    animation: animatedgradient 5s linear infinite;
+}
+
+#active-list::before,
+#active-input-add::before,
+#active-list li::before,
+#completed-list::before,
+#completed-input-add::before,
+#completed-list li::before,
+#archived-list::before,
+#archived-input-add::before,
+#archived-list li::before,
+header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    padding: 3px;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    --angle: 0deg;
+    background: linear-gradient(var(--angle), #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+    animation: animatedgradient 5s linear infinite;
+}
+
+#active-input-add::before,
+#active-list li::before,
+#completed-input-add::before,
+#completed-list li::before,
+#archived-input-add::before,
+#archived-list li::before {
+    border-radius: 10px;
+}
+
+#active-list li::before {
+    background: linear-gradient(135deg, #BFBFBF, #8A8A8A);
+}
+
+#active-input-add::before {
+    background: linear-gradient(var(--angle), #00BFB2, #21c7ec, #169dec,#0D8FED, #3568b4, #1145CC, #201765, #1D03DD);
+}
+
+#completed-list li::before {
+    background: linear-gradient(135deg, #BFBFBF, #8A8A8A);
+}
+
+#completed-input-add::before {
+    background: linear-gradient(var(--angle), #00bf19, #15a728, #16b12b,#10a824, #31af2c, #0d8f1f, #17651b, #035f13);
+}
+
+#archived-list li::before {
+    background: linear-gradient(135deg, #BFBFBF, #8A8A8A);
+}
+
+#archived-input-add::before {
+    background: linear-gradient(var(--angle), #bf0000, #a71515, #b11616,#a81010, #831d1d, #8f0d0d, #651717, #5f0303);
+}
+
+@keyframes animatedgradient {
+    to {
+        --angle: 360deg;
+    }
+}
+
+@property --angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@media (orientation: portrait) {
+    .lists-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin: 5px auto;
+    }
+
+    #active-list,
+    #completed-list,
+    #archived-list {
+        align-self: auto;
+    }
+}

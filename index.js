@@ -1,12 +1,16 @@
 const active = document.getElementById('active-list');
 const completed = document.getElementById('completed-list');
-const archived = document.getElementById('archieved-list');
+const archived = document.getElementById('archived-list');
 let activeTasks = [];
 let completedTasks = [];
 let archivedTasks = [];
 
-function renderTask(task, container, tasks) {
-    const taskId = Date.now();
+function getUniqueId() {
+    const random = Math.floor(Math.random() * 10000);
+    return `${random}`;
+}
+
+function renderTask(task, container, tasks, taskId) {
     const todo = document.createElement('li');
     todo.setAttribute('class', 'item');
     todo.setAttribute('data-task-id', taskId);
@@ -18,49 +22,50 @@ function renderTask(task, container, tasks) {
         iconContainer.appendChild(icon);
     };
     if (container === active) {
-        createAndAddIcon('done-icon', 'done', () => addTask(task, completedTasks, completed, task, tasks, container));
-        createAndAddIcon('archive-icon', 'archive', () => addTask(task, archivedTasks, archived, task, tasks, container));
-        createAndAddIcon('delete-icon', 'delete', () => removeTask(task, tasks, container));
+        createAndAddIcon('done-icon', 'done', () => addTask(task, completedTasks, completed, tasks, container), taskId);
+        createAndAddIcon('archive-icon', 'archive', () => addTask(task, archivedTasks, archived, tasks, container), taskId);
+        createAndAddIcon('delete-icon', 'delete', () => removeTask(taskId, tasks, container), taskId);
     } else if (container === completed) {
-        createAndAddIcon('archive-icon', 'archive', () => addTask(task, archivedTasks, archived, task, tasks, container));
-        createAndAddIcon('delete-icon', 'delete', () => removeTask(task, tasks, container));
+        createAndAddIcon('archive-icon', 'archive', () => addTask(task, archivedTasks, archived, tasks, container), taskId);
+        createAndAddIcon('delete-icon', 'delete', () => removeTask(taskId, tasks, container), taskId);
     } else if (container === archived) {
-        createAndAddIcon('done-icon', 'done', () => addTask(task, completedTasks, completed, task, tasks, container));
-        createAndAddIcon('unarchive-icon', 'unarchive', () => addTask(task, activeTasks, active, task, tasks, container));
-        createAndAddIcon('delete-icon', 'delete', () => removeTask(task, tasks, container));
+        createAndAddIcon('done-icon', 'done', () => addTask(task, completedTasks, completed, tasks, container), taskId);
+        createAndAddIcon('unarchive-icon', 'unarchive', () => addTask(task, activeTasks, active, tasks, container), taskId);
+        createAndAddIcon('delete-icon', 'delete', () => removeTask(taskId, tasks, container), taskId);
     }
     todo.appendChild(iconContainer);
     container.appendChild(todo);
 }
 
-function addTask(task, tasks, container) {
+function addTask(task, tasks, container, prevTasks, prevContainer) {
     const inputField = container.querySelector('input');
     const value = task === null ? inputField.value : task;
     if (!value) return;
-    const taskId = Date.now();
+    const taskId = getUniqueId();
     tasks.push({ id: taskId, text: value });
-    renderTask(value, container, tasks);
+    renderTask(value, container, tasks, taskId);
+    if (prevTasks && prevContainer) {
+        removeTask(task, prevTasks, prevContainer);
+    }
     inputField.value = '';
     saveTasksToLocalStorage();
 }
 
-function removeTask(task, tasks, container) {
-    if (!task) {
+function removeTask(taskId, tasks, container) {
+    const taskIndex = tasks.findIndex(task => task.id === String(taskId));
+    if (taskIndex !== -1) {
+        tasks.splice(taskIndex, 1);
+        const taskElement = container.querySelector(`li[data-task-id="${taskId}"]`);
+        if (taskElement) {
+            taskElement.remove();
+        } else {
+            console.warn(`Task element with id ${taskId} not found in the container.`);
+        }
+        saveTasksToLocalStorage();
+    } else {
+        console.warn(`Task with id ${taskId} not found in the tasks array.`);
         return;
     }
-    const index = tasks.findIndex(item => item.text === task);
-    if (index !== -1) {
-        tasks.splice(index, 1);
-    }
-    const listItems = container.getElementsByTagName('li');
-    for (let i = 0; i < listItems.length; i++) {
-        const listItem = listItems[i];
-        const taskId = listItem.getAttribute('data-task-id');
-        if (taskId && !tasks.some(item => item.id === Number(taskId))) {
-            listItem.remove();
-        }
-    }
-    saveTasksToLocalStorage();
 }
 
 function createIcon(className, text, clickHandler) {
@@ -72,21 +77,21 @@ function createIcon(className, text, clickHandler) {
 }
 
 function saveTasksToLocalStorage() {
-    localStorage.setItem('activeTasks', JSON.stringify(activeTasks.map(task => task.text)));
-    localStorage.setItem('completedTasks', JSON.stringify(completedTasks.map(task => task.text)));
-    localStorage.setItem('archivedTasks', JSON.stringify(archivedTasks.map(task => task.text)));
+    localStorage.setItem('activeTasks', JSON.stringify(activeTasks));
+    localStorage.setItem('completedTasks', JSON.stringify(completedTasks));
+    localStorage.setItem('archivedTasks', JSON.stringify(archivedTasks));
 }
 
 document.addEventListener('DOMContentLoaded', function () {
     activeTasks = loadTasksFromLocalStorage('activeTasks');
     completedTasks = loadTasksFromLocalStorage('completedTasks');
     archivedTasks = loadTasksFromLocalStorage('archivedTasks');
-    activeTasks.forEach((task) => renderTask(task.text, active, activeTasks));
-    completedTasks.forEach((task) => renderTask(task.text, completed, completedTasks));
-    archivedTasks.forEach((task) => renderTask(task.text, archived, archivedTasks));
+    activeTasks.forEach((task) => renderTask(task.text, active, activeTasks, task.id));
+    completedTasks.forEach((task) => renderTask(task.text, completed, completedTasks, task.id));
+    archivedTasks.forEach((task) => renderTask(task.text, archived, archivedTasks, task.id));
 });
 
 function loadTasksFromLocalStorage(key) {
     const storedTasks = localStorage.getItem(key);
-    return storedTasks ? JSON.parse(storedTasks).map(taskText => ({ id: Date.now(), text: taskText })) : [];
+    return storedTasks ? JSON.parse(storedTasks) : [];
 }
