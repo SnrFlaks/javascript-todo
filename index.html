@@ -24,6 +24,12 @@
         <h1 class="title">TODOS</h1>
     </header>
     <div class="lists-container">
+        <ul id="input-container">
+            <div id="task-input-add">
+                <input type="text" id="task-input" placeholder="Write your to-do">
+                <span class="material-symbols-outlined add-icon" onclick="addTask(null, activeTasks, active, null, null, null, inputContainer)">add</span>
+            </div>
+        </ul>
         <ul id="active-list">
             <span id="active-list-title">Active</span><br>
             <div id="active-input-add">

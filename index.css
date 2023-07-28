@@ -55,6 +55,57 @@ ul input[type="text"] {
     vertical-align: middle;
 }
 
+.title {
+    background: linear-gradient(var(--angle), #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+}
+
+.title {
+    font-size: 36px;
+    font-weight: bold;
+    flex: 1;
+    margin: 0;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    --angle: 0deg;
+    animation: animatedgradient 5s linear infinite;
+}
+
+.item {
+    align-items: center;
+    padding: 2.5%;
+}
+
+#task-input-add input[type="text"] {
+    font-size: 24px;
+}
+
+#active-list,
+#completed-list,
+#archived-list,
+#input-container {
+    position: relative;
+    border-radius: 20px;
+    padding: 10px;
+    width: 35%;
+    align-self: flex-start;
+    background-color: rgb(31, 31, 31);
+    margin: 10px;
+}
+
+#completed-list li {
+    color: grey;
+    text-decoration: line-through;
+}
+
+#archived-list li{
+    color: grey;
+}
+
+#input-container {
+    align-self: auto;
+    width: 45%;
+}
+
 #active-list-title,
 #completed-list-title,
 #archived-list-title {
@@ -66,28 +117,10 @@ ul input[type="text"] {
     -webkit-text-fill-color: transparent;
 }
 
-.title {
-    background: linear-gradient(var(--angle), #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
-}
-
-.title {
-    font-size: 24px;
-    font-weight: bold;
-    flex: 1;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    --angle: 0deg;
-    animation: animatedgradient 5s linear infinite;
-}
-
-.title {
-    margin: 0;
-    font-size: 36px;
-}
-
 #active-input-add,
 #completed-input-add,
-#archived-input-add {
+#archived-input-add,
+#task-input-add {
     position: relative;
     display: flex;
     justify-content: space-between;
@@ -95,26 +128,10 @@ ul input[type="text"] {
     padding: 2px;
 }
 
-.item {
-    align-items: center;
-    padding: 2.5%;
-}
-
-#active-list,
-#completed-list,
-#archived-list {
-    position: relative;
-    border-radius: 20px;
-    padding: 10px;
-    width: 55%;
-    align-self: flex-start;
-    background-color: rgb(31, 31, 31);
-    margin: 10px;
-}
-
 #active-list::after,
 #completed-list::after,
 #archived-list::after,
+#input-container::after,
 header::after {
     content: "";
     position: absolute;
@@ -139,6 +156,7 @@ header::after {
 #archived-list::before,
 #archived-input-add::before,
 #archived-list li::before,
+#input-container::before,
 header::before {
     content: "";
     position: absolute;
@@ -200,6 +218,7 @@ header::before {
     #active-list,
     #completed-list,
     #archived-list {
+        width: 55%;
         align-self: auto;
     }
 }
