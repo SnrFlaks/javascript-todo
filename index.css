@@ -53,25 +53,21 @@ ul input[type="text"] {
     vertical-align: middle;
 }
 
-#active-list-title {
-    background: linear-gradient(135deg, #00BFB2, #3568b4);
-}
-
-#completed-list-title {
-    background: linear-gradient(135deg, #01cf1d, #249c20);
-}
-
+#active-list-title,
+#completed-list-title,
 #archived-list-title {
-    background: linear-gradient(135deg, #bf0000, #831d1d);
+    font-size: 24px;
+    font-weight: bold;
+    flex: 1;
+    background: linear-gradient(135deg, #d8d8d8, #a7a7a7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .title {
-    background: linear-gradient(135deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+    background: linear-gradient(var(--angle), #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
 }
 
-#active-list-title,
-#completed-list-title,
-#archived-list-title,
 .title {
     font-size: 24px;
     font-weight: bold;
@@ -165,28 +161,16 @@ header::before {
     border-radius: 10px;
 }
 
-#active-list li::before {
-    background: linear-gradient(135deg, #BFBFBF, #8A8A8A);
-}
-
-#active-input-add::before {
-    background: linear-gradient(var(--angle), #00BFB2, #21c7ec, #169dec,#0D8FED, #3568b4, #1145CC, #201765, #1D03DD);
-}
-
-#completed-list li::before {
-    background: linear-gradient(135deg, #BFBFBF, #8A8A8A);
-}
-
-#completed-input-add::before {
-    background: linear-gradient(var(--angle), #00bf19, #15a728, #16b12b,#10a824, #31af2c, #0d8f1f, #17651b, #035f13);
-}
-
+#active-list li::before,
+#completed-list li::before,
 #archived-list li::before {
     background: linear-gradient(135deg, #BFBFBF, #8A8A8A);
 }
 
+#active-input-add::before,
+#completed-input-add::before,
 #archived-input-add::before {
-    background: linear-gradient(var(--angle), #bf0000, #a71515, #b11616,#a81010, #831d1d, #8f0d0d, #651717, #5f0303);
+    background: linear-gradient(var(--angle), #d8d8d8, #a7a7a7, #585858);
 }
 
 @keyframes animatedgradient {
