@@ -30,7 +30,8 @@ ul li {
     justify-content: space-between;
     margin: 10px 0;
     color: white;
-    word-wrap: break-word;
+    overflow: hidden;
+    word-break: break-all;
 }
 
 ul input[type="text"] {
